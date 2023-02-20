@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Image Classification</title>
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+      }
+
+      body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .input-wrapper {
+        position: relative;
+        width: 180px;
+        height: 40px;
+        margin-bottom: 20px;
+      }
+
+      .input-wrapper input {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        z-index: 2;
+      }
+
+      .input-wrapper label {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 20px;
+        background-color: #555;
+        color: #fff;
+        font-size: 14px;
+        line-height: 40px;
+        text-align: center;
+        z-index: 1;
+        cursor: pointer;
+      }
+
+      .input-wrapper label:hover {
+        background-color: #666;
+      }
+
+      button {
+        padding: 10px 20px;
+        background-color: #555;
+        color: #fff;
+        border: none;
+        border-radius: 20px;
+        font-size: 14px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+      }
+
+      button:hover {
+        background-color: #666;
+      }
+    </style>
+    <script>
+      function previewImage(event) {
+        var preview = document.getElementById("image-preview");
+        preview.src = URL.createObjectURL(event.target.files[0]);
+        preview.style.display = "block";
+        var container = document.getElementById("form-container");
+        container.style.display = "block";
+      }
+    </script>
+  </head>
+  <body>
+    <h1>Waste bin classification using Machine Learning</h1>
+    <h3>Upload an image for classification</h3>
+    <form method="post" enctype="multipart/form-data" action="{{ url_for('predict') }}">
+      <div class="input-wrapper">
+        <input type="file" name="image" accept="image/*" required onchange="previewImage(event)">
+        <label>Choose File</label>
+      </div>
+      <div id="form-container" style="display:none">
+        <img id="image-preview" style="max-width: 400px">
+        <br><br>
+        <button type="submit">Classify Image</button>
+      </div>
+    </form>
+  </body>
+</html>
